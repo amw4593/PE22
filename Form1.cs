@@ -2,24 +2,28 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Threading;
+using System.Xml.Serialization;
 
 namespace PE21
 {
     public partial class Form1 : Form
     {
-        public Form1()
+        public Form1(Form2 myEditorParent)
         {
             InitializeComponent();
 
-            this.newToolStripMenuItem.Click += new EventHandler(NewToolStripMenuItem__Click);
-            this.openToolStripMenuItem.Click += new EventHandler(OpenToolStripMenuItem__Click);
-            this.saveToolStripMenuItem.Click += new EventHandler(SaveToolStripMenuItem__Click);
-            this.exitToolStripMenuItem.Click += new EventHandler(ExitToolStripMenuItem__Click);
+            this.MdiParent = myEditorParent;
 
-            this.copyToolStripMenuItem.Click += new EventHandler(CopyToolStripMenuItem__Click);
-            this.cutToolStripMenuItem.Click += new EventHandler(CutToolStripMenuItem__Click);
-            this.pasteToolStripMenuItem.Click += new EventHandler(PasteToolStripMenuItem__Click);
+            //this.newToolStripMenuItem.Click += new EventHandler(NewToolStripMenuItem__Click);
+            myEditorParent.openToolStripMenuItem.Click += new EventHandler(OpenToolStripMenuItem__Click);
+            myEditorParent.saveToolStripMenuItem.Click += new EventHandler(SaveToolStripMenuItem__Click);
+            //this.exitToolStripMenuItem.Click += new EventHandler(ExitToolStripMenuItem__Click);
 
+            myEditorParent.copyToolStripMenuItem.Click += new EventHandler(CopyToolStripMenuItem__Click);
+            myEditorParent.cutToolStripMenuItem.Click += new EventHandler(CutToolStripMenuItem__Click);
+            myEditorParent.pasteToolStripMenuItem.Click += new EventHandler(PasteToolStripMenuItem__Click);
+
+            myEditorParent.closeAllToolStripMenuItem.Click += new EventHandler(CloseAllToolStripMenuItem__Click);
             this.boldToolStripMenuItem.Click += new EventHandler(BoldToolStripMenuItem__Click);
             this.italicsToolStripMenuItem.Click += new EventHandler(ItalicsToolStripMenuItem__Click);
             this.underlineToolStripMenuItem.Click += new EventHandler(UnderlineToolStripMenuItem__Click);
@@ -39,8 +43,28 @@ namespace PE21
 
 
             this.Text = "MyEditor";
+
+            this.FormClosing += new FormClosingEventHandler(Form1__FormClosing);
         }
 
+        private void Form1__FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Form2 myEditorParent = (Form2)this.MdiParent;
+            myEditorParent.openToolStripMenuItem.Click -= new EventHandler(OpenToolStripMenuItem__Click);
+            myEditorParent.saveToolStripMenuItem.Click -= new EventHandler(SaveToolStripMenuItem__Click);
+            
+
+            myEditorParent.copyToolStripMenuItem.Click -= new EventHandler(CopyToolStripMenuItem__Click);
+            myEditorParent.cutToolStripMenuItem.Click -= new EventHandler(CutToolStripMenuItem__Click);
+            myEditorParent.pasteToolStripMenuItem.Click -= new EventHandler(PasteToolStripMenuItem__Click);
+
+            myEditorParent.closeAllToolStripMenuItem.Click -= new EventHandler(CloseAllToolStripMenuItem__Click);
+        }
+
+        private void CloseAllToolStripMenuItem__Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
         private void NewToolStripMenuItem__Click(object sender, EventArgs e)
         {
             richTextBox1.Clear();
@@ -67,9 +91,9 @@ namespace PE21
 
             this.countdownLabel.Text = "3";
             this.countdownLabel.Visible = true;
-            this.richTextBox1 .Visible = false;
+            this.richTextBox1.Visible = false;
 
-            for(int i = 3; i > 0; i--)
+            for (int i = 3; i > 0; i--)
             {
                 this.countdownLabel.Text = i.ToString();
                 this.Refresh();
@@ -145,6 +169,10 @@ namespace PE21
 
         private void OpenToolStripMenuItem__Click(object sender, EventArgs e)
         {
+            if(this.MdiParent.ActiveMdiChild != this)
+            {
+                return;
+            }
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 RichTextBoxStreamType richTextBoxStreamType = RichTextBoxStreamType.RichText;
@@ -159,6 +187,10 @@ namespace PE21
         }
         private void SaveToolStripMenuItem__Click(object sender, EventArgs e)
         {
+            if (this.MdiParent.ActiveMdiChild != this)
+            {
+                return;
+            }
             saveFileDialog1.FileName = openFileDialog1.FileName;
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
@@ -180,14 +212,26 @@ namespace PE21
 
         private void CopyToolStripMenuItem__Click(object sender, EventArgs e)
         {
+            if (this.MdiParent.ActiveMdiChild != this)
+            {
+                return;
+            }
             richTextBox1.Copy();
         }
         private void CutToolStripMenuItem__Click(object sender, EventArgs e)
         {
+            if (this.MdiParent.ActiveMdiChild != this)
+            {
+                return;
+            }
             richTextBox1.Cut();
         }
         private void PasteToolStripMenuItem__Click(object sender, EventArgs e)
         {
+            if (this.MdiParent.ActiveMdiChild != this)
+            {
+                return;
+            }
             richTextBox1.Paste();
         }
 

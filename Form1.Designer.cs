@@ -61,9 +61,9 @@
             colorDialog = new ColorDialog();
             timer1 = new System.Windows.Forms.Timer(components);
             toolStripContainer1 = new ToolStripContainer();
-            countdownLabel = new Label();
             statusStrip1 = new StatusStrip();
             toolStripProgressBar1 = new ToolStripProgressBar();
+            countdownLabel = new Label();
             menuStrip1.SuspendLayout();
             toolStrip1.SuspendLayout();
             contextMenuStrip1.SuspendLayout();
@@ -83,6 +83,7 @@
             menuStrip1.Size = new Size(914, 30);
             menuStrip1.TabIndex = 0;
             menuStrip1.Text = "menuStrip1";
+            menuStrip1.Visible = false;
             // 
             // fileToolStripMenuItem
             // 
@@ -305,24 +306,12 @@
             toolStripContainer1.ContentPanel.Controls.Add(countdownLabel);
             toolStripContainer1.ContentPanel.Controls.Add(toolStrip1);
             toolStripContainer1.ContentPanel.Controls.Add(richTextBox1);
-            toolStripContainer1.ContentPanel.Size = new Size(914, 544);
+            toolStripContainer1.ContentPanel.Size = new Size(914, 519);
             toolStripContainer1.Location = new Point(1, 31);
             toolStripContainer1.Name = "toolStripContainer1";
             toolStripContainer1.Size = new Size(914, 568);
             toolStripContainer1.TabIndex = 1;
             toolStripContainer1.Text = "toolStripContainer1";
-            // 
-            // countdownLabel
-            // 
-            countdownLabel.Dock = DockStyle.Fill;
-            countdownLabel.Font = new Font("Microsoft Sans Serif", 48F, FontStyle.Bold, GraphicsUnit.Point);
-            countdownLabel.ForeColor = Color.Coral;
-            countdownLabel.Location = new Point(0, 0);
-            countdownLabel.Name = "countdownLabel";
-            countdownLabel.Size = new Size(914, 544);
-            countdownLabel.TabIndex = 2;
-            countdownLabel.Text = "3";
-            countdownLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // statusStrip1
             // 
@@ -342,6 +331,18 @@
             toolStripProgressBar1.Size = new Size(700, 16);
             toolStripProgressBar1.Style = ProgressBarStyle.Continuous;
             toolStripProgressBar1.Click += toolStripProgressBar1_Click;
+            // 
+            // countdownLabel
+            // 
+            countdownLabel.Dock = DockStyle.Fill;
+            countdownLabel.Font = new Font("Microsoft Sans Serif", 48F, FontStyle.Bold, GraphicsUnit.Point);
+            countdownLabel.ForeColor = Color.Coral;
+            countdownLabel.Location = new Point(0, 0);
+            countdownLabel.Name = "countdownLabel";
+            countdownLabel.Size = new Size(914, 519);
+            countdownLabel.TabIndex = 2;
+            countdownLabel.Text = "3";
+            countdownLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // Form1
             // 
@@ -373,17 +374,17 @@
 
         private void toolStripProgressBar1_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+
         }
 
         private void richTextBox1_TextChanged(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+
         }
 
         private void splitContainer1_Panel2(object sender, PaintEventArgs e)
         {
-            throw new NotImplementedException();
+
         }
 
         #endregion
